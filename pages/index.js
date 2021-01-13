@@ -1,49 +1,37 @@
-import React from "react";
-import Head from "next/head";
+import React, { useState, useEffect } from "react";
 
-const Home = () => (
-  <div>
-    <h1>Next.js on the [JAMstack](https://jamstack.org)</h1>
+const Home = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const ismobile = window.innerWidth < 700;
+    if (ismobile !== isMobile) setIsMobile(ismobile);
 
-    <h3>
-      Hooray 🎉 - you've built this with{" "}
-      <a href="https://nextjs.org">Next.js</a>!
-    </h3>
+    window.addEventListener(
+      "resize",
+      () => {
+        const ismobile = window.innerWidth < 700;
+        if (ismobile !== isMobile) setIsMobile(ismobile);
+      },
+      false
+    );
+  }, [isMobile]);
+  return (
+    <div className="main">
+      <h1 className={`${isMobile ? "" : "text-9xl"}`}>Welcome home.</h1>
 
-    <style jsx>{`
-      :global(html, body) {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-      }
-
-      :global(body) {
-        font-size: calc(10px + 1vmin);
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-          "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-          "Helvetica Neue", sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        background-color: #282c34;
-        color: white;
-      }
-
-      a {
-        color: pink;
-        text-decoration: none;
-      }
-
-      .content {
-        padding: 0 32px;
-      }
-    `}</style>
-  </div>
-);
+      <style jsx>
+        {`
+          .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 80vh;
+          }
+        `}
+      </style>
+    </div>
+  );
+};
 
 export default Home;
